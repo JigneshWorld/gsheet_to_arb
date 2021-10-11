@@ -30,13 +30,14 @@ class GSheetToArb {
     final arbBundle = await sheetParser.parseDocument(document);
 
     // Save ArbBundle
-    _arbSerializer.saveArbBundle(arbBundle, config!.outputDirectoryPath!);
+    _arbSerializer.saveArbBundle(arbBundle, config!.outputDirectoryPath!,
+        config!.arbFilePrefix ?? 'intl');
 
     // Generate Code from ArbBundle
     if (config!.generateCode!) {
       final generator = ArbToDartGenerator();
-      generator.generateDartClasses(
-          arbBundle, config!.outputDirectoryPath!, config!.localizationFileName!);
+      generator.generateDartClasses(arbBundle, config!.outputDirectoryPath!,
+          config!.localizationFileName!);
     }
 
     Log.i('Succeeded after ${Log.stopTimeTracking()}');
